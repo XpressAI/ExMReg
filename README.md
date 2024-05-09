@@ -19,6 +19,19 @@ $ pip install -r requirements.txt
 $ npm run dev
 ```
 
+### Build (not currently supported)
+
+```bash
+# For windows
+$ npm run build:win
+
+# For macOS
+$ npm run build:mac
+
+# For Linux
+$ npm run build:linux
+```
+
 ## Alignment Instructions
 
 After installing all required node and python packages and running the application with
@@ -33,16 +46,3 @@ To execute alignment:
 - Save your newly edited transformation step.
 - Drag and drop alignment steps to adjust the order in which they execute.
 - Click run to execute the transformations.
-
-### Build (not currently supported)
-
-```bash
-# For windows
-$ npm run build:win
-
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
-```
