@@ -1,0 +1,59 @@
+name: Build Application
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11" # Specify your Python version
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Build Python project with PyInstaller
+        run: |
+          pyinstaller backend.spec
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: backend
+          path: dist/backend
+
+  build-electron:
+    needs: build-backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20" # Specify your Node.js version
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Build Electron project
+        run: npm run package # Replace with your actual build script for Electron
+
+      - name: Upload Electron build
+        uses: actions/upload-artifact@v2
+        with:
+          name: electron-build
+          path: out/

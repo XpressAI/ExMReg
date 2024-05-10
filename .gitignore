@@ -70,3 +70,5 @@ move.zarr
 .devenv.flake.nix
 .envrc
 .direnv/
+
+build/

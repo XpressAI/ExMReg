@@ -7,6 +7,8 @@ from bigstream.transform import apply_transform
 import napari
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, List, Union
+import uvicorn
+
 
 app = FastAPI()
 
@@ -36,7 +38,7 @@ class TransformRequest(BaseModel):
     mov_mask: Optional[Union[List, None]] = None
     fix_origin: Optional[Union[List, None]] = None
     mov_origin: Optional[Union[List, None]] = None
-    kwargs: dict # These are global kwargs for the alignment pipeline, overwritten by kwargs in steps
+    kwargs: dict  # These are global kwargs for the alignment pipeline, overwritten by kwargs in steps
 
 
 class SuccessResponse(BaseModel):
@@ -54,14 +56,18 @@ async def apply_alignment(request: TransformRequest):
 
     fix_spacing = np.array(request.fix_spacing)
     mov_spacing = np.array(request.mov_spacing)
-    
+
     steps = [(step[0], step[1]) for step in request.steps]
 
     fix_mask = np.array(request.fix_mask) if request.fix_mask is not None else None
     mov_mask = np.array(request.mov_mask) if request.mov_mask is not None else None
 
-    fix_origin = np.array(request.fix_origin) if request.fix_origin is not None else None
-    mov_origin = np.array(request.mov_origin) if request.mov_origin is not None else None
+    fix_origin = (
+        np.array(request.fix_origin) if request.fix_origin is not None else None
+    )
+    mov_origin = (
+        np.array(request.mov_origin) if request.mov_origin is not None else None
+    )
 
     transform = alignment_pipeline(
         fix=fix,
@@ -81,7 +87,9 @@ async def apply_alignment(request: TransformRequest):
         mov=mov,
         fix_spacing=fix_spacing,
         mov_spacing=mov_spacing,
-        transform_list=[transform,],
+        transform_list=[
+            transform,
+        ],
     )
 
     viewer = napari.Viewer()
@@ -89,3 +97,7 @@ async def apply_alignment(request: TransformRequest):
     napari.run()
 
     return SuccessResponse(message="Image is being displayed in Napari.")
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)

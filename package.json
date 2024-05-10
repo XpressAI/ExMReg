@@ -15,18 +15,22 @@
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "npm run build && electron-builder --mac",
-    "build:linux": "npm run build && electron-builder --linux"
+    "build:linux": "npm run build && electron-builder --linux",
+    "package": "electron-packager . --arch=x64 --out=dist"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
-    "svelte-dnd-action": "^0.9.42"
+    "svelte-dnd-action": "^0.9.42",
+    "tslib": "^2.6.2",
+    "which": "^4.0.0"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
+    "@electron/packager": "^18.3.2",
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
-    "electron": "^28.2.0",
+    "electron": "^28.3.1",
     "electron-builder": "^24.9.1",
     "electron-vite": "^2.0.0",
     "eslint": "^8.56.0",
@@ -42,7 +46,7 @@
       "out/**/*",
       "node_modules/**/*"
     ],
-    "asarUnpack":"./scripts/**",
+    "asarUnpack": "./scripts/**",
     "extraResources": "./scripts/**"
   }
 }

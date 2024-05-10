@@ -13,6 +13,6 @@
   };
 
   # https://devenv.sh/packages/
-  packages = [ ];
+  packages = [ pkgs.fontconfig.lib pkgs.openblas.dev ];
 
 }
