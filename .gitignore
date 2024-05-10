@@ -52,4 +52,21 @@ package-lock.json
 docs/
 
 # Ignore build artifacts
-build/
+build/# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
+# ignore test data
+fixed.zarr
+move.zarr
+
+# nix stuff
+.devenv.flake.nix
+.envrc
+.direnv/
