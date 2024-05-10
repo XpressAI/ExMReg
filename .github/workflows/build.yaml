@@ -50,7 +50,7 @@ jobs:
         run: npm install
 
       - name: Build Electron project
-        run: npm run package # Replace with your actual build script for Electron
+        run: npm run build && npm run package # Replace with your actual build script for Electron
 
       - name: Upload Electron build
         uses: actions/upload-artifact@v2
